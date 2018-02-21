@@ -14,21 +14,32 @@
     <button ion-button color="dark" full round (click)="scan()">Start Scan</button>
   </h1>
 
+  <h1>Firebase add v5</h1>
 
+  <ion-item>
+    <ion-input [(ngModel)]="input1"></ion-input>
+    
+  </ion-item>
   <form (ngSubmit)="add_firebase(registerForm)" #registerForm="ngForm">
       <label for="name"> username</label>
-      <input type="text" name="username" ngModel>
+      <input type="text" class="input_custom1" name="username" ngModel>
       <label for="description"> password</label>
-      <input type="text" name="password" ngModel>
-    
-
-      <button ion-button color="dark"  type="submit">Submit</button>
+      <input type="text" class="input_custom1 form-control"  name="password" ngModel>
+     
+     
+      <button ion-button  full round color="dark"  type="submit">Submit</button>
   </form>
 
   <ion-list>
-  <ion-item *ngFor="let item_user of user_all; let i = index;" (click)="delete_firebase(i)">
+  <ion-item *ngFor="let item_user of user_all; let i = index;" >
 
-    {{item_user.username}}      {{item_user.password}} 
+    {{item_user.username}}      {{item_user.password}}  
+
+    
+    <input type="text" class="input_custom1" name="username{{i}}" ng-model="example.i"  value="{{item_user.username}}"> 
+    <button ion-button  (click)="delete_firebase(item_user.key)" class="button">Delete{{i+1}}</button>
+
+    <button ion-button  (click)="update_firebase(item_user.key,'asdasd')" class="button">Update{{i+1}}</button>
   </ion-item>
   </ion-list>
 

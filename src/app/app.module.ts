@@ -11,6 +11,7 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
@@ -35,6 +36,7 @@ var firebaseConfig = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    NgbModule,
     AngularFireModule.initializeApp(firebaseConfig),
     FormsModule,
     AngularFireDatabaseModule,   

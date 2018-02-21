@@ -26,6 +26,7 @@
     "@ionic-native/status-bar": "3.12.1",
     "@ionic-native/toast": "^4.2.1",
     "@ionic/storage": "2.0.1",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0",
     "angularfire2": "^5.0.0-rc.6",
     "cordova-android": "6.2.3",
     "cordova-plugin-compat": "^1.2.0",
