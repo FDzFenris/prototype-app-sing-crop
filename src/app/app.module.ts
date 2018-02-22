@@ -11,7 +11,8 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
-
+import { user } from '../pages/user/user';
+import { ToastService } from '../providers/toastService';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
@@ -31,7 +32,8 @@ var firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    user
   ],
   imports: [
     BrowserModule,
@@ -44,14 +46,17 @@ var firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    user
   ],
   providers: [
     StatusBar,
+    ToastService,
     SplashScreen,
     AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BarcodeScanner
+   
   ]
 })
 export class AppModule {}

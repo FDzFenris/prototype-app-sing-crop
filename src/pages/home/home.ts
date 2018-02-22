@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { NavController,Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
+import { user } from '../user/user'
 
 import { AngularFireDatabase } from 'angularfire2/database';
-
+import {Injectable} from "@angular/core";
 
 //////อ้างอิงจาก//////
 ///// https://github.com/angular/angularfire2/blob/master/docs/version-5-upgrade.md
@@ -14,9 +15,9 @@ import { AngularFireDatabase } from 'angularfire2/database';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+@Injectable()
 export class HomePage {
-  encodeData : string ;
-  encodedData : {} ;
+
   user_all= [];
   public todo = <any>{};
   
@@ -40,10 +41,18 @@ export class HomePage {
       this.user_all = _data;
       console.log(this.user_all);
     }); */
- 
+    this.checkhome()
   }
 
-
+  public checkhome(){
+    console.log("home")
+  }
+  navigate() {
+    this.navCtrl.push(user, {
+      firstPassed: "ADMIN1",
+      secondPassed: "ADMIN2"
+    })
+  }
   
 
  /*  add_firebase(data: NgForm){
@@ -74,52 +83,35 @@ export class HomePage {
 
 
 
-   public scan() {
-     
-      this.barcodeScanner.scan().then((barcodeData) => {        
-
-      console.log("scanner")
-        alert("type"+barcodeData.format+ " data "+barcodeData.text);
-      
-      }, (err) => {
-        console.log('ไม่สามารถเชื่อมต่อได้ _ '+err);
-      
-      });
-    }
+  
 
 
     public scan_checkin() {
 
-      /////select * firebase //////
-   
-      
-
-
-
+      /////select * firebase //////  
       let daynow = new Date().toLocaleString()
-      //alert(daynow)
       this.barcodeScanner.scan().then((barcodeData) => {        
 
         console.log("scanner")
-        alert("type"+barcodeData.format+ " data "+barcodeData.text);
+        alert("ชนิดของCODE: "+barcodeData.format+ " ข้อมูล: "+barcodeData.text);
 
         this.fdb.list('/all_user/', ref => ref.orderByChild('number_id').equalTo(barcodeData.text)).valueChanges().subscribe(_data=>{
           console.log(_data);
           var myJSON = JSON.parse(JSON.stringify(_data));
        
-          if(_data.length>0){
-            //alert('ข้อมูลของ : '+myJSON)
-            //console.log(myJSON[0].fname);
-        ////////////////////////// insert into    ////////////////////////////////////////////////
-              const afList = this.fdb.list('/check_in/');
-              afList.push({ 
-                check_in: barcodeData.text
-                ,check_in_time : daynow
-                ,fname : myJSON[0].fname
-                ,lname : myJSON[0].lname 
-              });
-              const listObservable = afList.snapshotChanges();
-              listObservable.subscribe(); 
+              if(_data.length>0){
+                //alert('ข้อมูลของ : '+myJSON)
+                //console.log(myJSON[0].fname);
+            ////////////////////////// insert into    ////////////////////////////////////////////////
+                  const afList = this.fdb.list('/check_in/');
+                  afList.push({ 
+                    check_in: barcodeData.text
+                    ,check_in_time : daynow
+                    ,fname : myJSON[0].fname
+                    ,lname : myJSON[0].lname 
+                  });
+                  const listObservable = afList.snapshotChanges();
+                  listObservable.subscribe(); 
 
                 }
                 else{
@@ -136,6 +128,20 @@ export class HomePage {
       }, (err) => {
         console.log('ไม่สามารถเชื่อมต่อได้ _ '+err);
         alert('ไม่สามารถเชื่อมต่อได้ _ '+err);
+      });
+    }
+
+
+    public scan() {
+     
+      this.barcodeScanner.scan().then((barcodeData) => {        
+
+      console.log("scanner")
+        alert("type"+barcodeData.format+ " data "+barcodeData.text);
+      
+      }, (err) => {
+        console.log('ไม่สามารถเชื่อมต่อได้ _ '+err);
+      
       });
     }
 

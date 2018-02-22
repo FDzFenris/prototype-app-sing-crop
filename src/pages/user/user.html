@@ -1,0 +1,36 @@
+<ion-header>
+ 
+    <ion-navbar>
+      <ion-title>USER_MANAGE</ion-title>
+    </ion-navbar>
+   
+  </ion-header>
+   
+   
+  <ion-content padding>
+
+    {{this.firstParam}}
+
+
+    
+
+    <ion-item>
+        <ion-label floating>ชื่อ </ion-label>
+        <ion-input type="text"  [(ngModel)]="todouser.fname_update" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>นามสกุล </ion-label>
+        <ion-input type="text"  [(ngModel)]="todouser.lname_update" ></ion-input>
+      </ion-item>
+      <ion-item>
+       <ion-label floating>เลขบัตรประชาชน </ion-label>
+        <ion-input type="text"  [(ngModel)]="todouser.number_id" ></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>เบอร์โทร </ion-label>
+           <ion-input type="text"  [(ngModel)]="todouser.phone" ></ion-input>
+      </ion-item>
+      <button ion-button  full round   color="secondary"  (click)="add_firebase()" class="button">Register</button>
+
+  </ion-content>
+   

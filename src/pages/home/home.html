@@ -10,31 +10,14 @@
  
  
   <h1>
-      BARCODESCANER
-    <button ion-button color="dark" full round (click)="scan()">Start Scan</button>
+     CHECK
+     <button ion-button (click)="navigate()">จัดการข้อมูลพนักงาน</button>
+    
     <button ion-button color="dark" full round (click)=" scan_checkin() ">checkin</button>
   </h1>
 
 
    
-
-    <ion-item>
-      <ion-label floating>ชื่อ </ion-label>
-      <ion-input type="text"  [(ngModel)]="todo.fname_update" ></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>นามสกุล </ion-label>
-      <ion-input type="text"  [(ngModel)]="todo.lname_update" ></ion-input>
-    </ion-item>
-    <ion-item>
-     <ion-label floating>เลขบัตรประชาชน </ion-label>
-      <ion-input type="text"  [(ngModel)]="todo.number_id" ></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label floating>เบอร์โทร </ion-label>
-         <ion-input type="text"  [(ngModel)]="todo.phone" ></ion-input>
-    </ion-item>
-    <button ion-button  full round   color="secondary"  (click)="add_firebase()" class="button">Register</button>
 
 
     <hr>

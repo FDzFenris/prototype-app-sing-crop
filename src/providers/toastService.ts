@@ -1,0 +1,12 @@
+import {Injectable} from "@angular/core";
+
+@Injectable()
+export class ToastService {
+  constructor() {
+      // ...
+  }
+
+  showToast() {
+      alert("toast");
+  }
+}
