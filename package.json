@@ -29,6 +29,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.0",
     "angularfire2": "^5.0.0-rc.6",
     "cordova-android": "6.2.3",
+    "cordova-ios": "4.5.4",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-device": "^1.1.7",
@@ -63,7 +64,8 @@
       "cordova-plugin-x-toast": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
