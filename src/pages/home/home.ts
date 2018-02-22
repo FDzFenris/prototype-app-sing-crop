@@ -87,6 +87,58 @@ export class HomePage {
       });
     }
 
+
+    public scan_checkin() {
+
+      /////select * firebase //////
+   
+      
+
+
+
+      let daynow = new Date().toLocaleString()
+      //alert(daynow)
+      this.barcodeScanner.scan().then((barcodeData) => {        
+
+        console.log("scanner")
+        alert("type"+barcodeData.format+ " data "+barcodeData.text);
+
+        this.fdb.list('/all_user/', ref => ref.orderByChild('number_id').equalTo(barcodeData.text)).valueChanges().subscribe(_data=>{
+          console.log(_data);
+          var myJSON = JSON.parse(JSON.stringify(_data));
+       
+          if(_data.length>0){
+            //alert('ข้อมูลของ : '+myJSON)
+            //console.log(myJSON[0].fname);
+        ////////////////////////// insert into    ////////////////////////////////////////////////
+              const afList = this.fdb.list('/check_in/');
+              afList.push({ 
+                check_in: barcodeData.text
+                ,check_in_time : daynow
+                ,fname : myJSON[0].fname
+                ,lname : myJSON[0].lname 
+              });
+              const listObservable = afList.snapshotChanges();
+              listObservable.subscribe(); 
+
+                }
+                else{
+                  alert('ไม่มีข้อมูลของบุคคลนี้');                 
+                }
+
+              });
+
+
+       
+
+
+      
+      }, (err) => {
+        console.log('ไม่สามารถเชื่อมต่อได้ _ '+err);
+        alert('ไม่สามารถเชื่อมต่อได้ _ '+err);
+      });
+    }
+
    /*  public getbarcode(){
    
       this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE,this.encodeData).then((encodedData) => {
