@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { NavController,Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
-import { NgForm } from '@angular/forms';
+
 import { AngularFireDatabase } from 'angularfire2/database';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 //////อ้างอิงจาก//////
 ///// https://github.com/angular/angularfire2/blob/master/docs/version-5-upgrade.md
@@ -16,27 +15,27 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  encodeData : string ;
+  encodedData : {} ;
   user_all= [];
- 
+  public todo = <any>{};
   
   constructor(
-    public navCtrl: NavController,
-    public bootstap :NgbModule,
-    public platform: Platform,
+    public navCtrl: NavController, 
+    public platform: Platform,   
     private barcodeScanner: BarcodeScanner,    
     public fdb : AngularFireDatabase,
     
   ){
     
-    this.fdb.list('/admin_user/').snapshotChanges().map(actions => {
+    this.fdb.list('/all_user/').snapshotChanges().map(actions => {
        this.user_all = actions.map(action => ({ key: action.key, ...action.payload.val() }));
     }).subscribe(items => {
        //return items.map(item => item.key);
     });
     
     /////////กรณี แบบเดิม  v.4.0  (ใช้ไม่ได้แล้ว)////////
-   /*  this.fdb.list('/admin_user/').valueChanges().subscribe(_data=>{
+   /*  this.fdb.list('/all_user/').valueChanges().subscribe(_data=>{
 
       this.user_all = _data;
       console.log(this.user_all);
@@ -45,32 +44,34 @@ export class HomePage {
   }
 
 
-
-
   
 
-  add_firebase(data: NgForm){
-    this.fdb.list("/admin_user/").push(data.value);
+ /*  add_firebase(data: NgForm){
+   /////////กรณี  v.4.0  (ใช้งานได้)////////
+    this.fdb.list("/all_user/").push(data.value);
+  } */
 
+  add_firebase(){
     /////////กรณี  v.5.0  (ใช้งานได้)////////
-   /*  const afList = this.fdb.list('/admin_user/');
-    afList.push({ name: 'item' });
+    const afList = this.fdb.list('/all_user/');
+    afList.push({ fname: this.todo.fname_update,lname: this.todo.lname_update,number_id: this.todo.number_id,phone: this.todo.phone  });
     const listObservable = afList.snapshotChanges();
-    listObservable.subscribe(); */
+    listObservable.subscribe(); 
   }
     
   delete_firebase (item){
     
     console.log('remove key : '+item);
-    this.fdb.list("/admin_user/").remove(item);
+    this.fdb.list("/all_user/").remove(item);
   }
 
-  update_firebase(item,username_data){
-    console.log(username_data);
-    console.log(this.fdb.list("/admin_user/").update(item,{ username: username_data })
-  );
+  update_firebase(item){
+    console.log(this.todo);
+    console.log(this.fdb.list("/all_user/").update(item,{ fname: this.todo.fname_update,lname: this.todo.lname_update,number_id: this.todo.number_id,phone: this.todo.phone  }));
 
   }
+
+
 
 
    public scan() {
@@ -86,8 +87,17 @@ export class HomePage {
       });
     }
 
+   /*  public getbarcode(){
+   
+      this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE,this.encodeData).then((encodedData) => {
 
+        console.log(encodedData);
+        this.encodedData = encodedData;
 
+      }, (err) => {
+        console.log("Error occured : " + err);
+        });                 
+     } */
 
   
 
@@ -95,3 +105,5 @@ export class HomePage {
   
   
   }
+
+  
