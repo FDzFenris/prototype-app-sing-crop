@@ -21,19 +21,15 @@ export class ManageUserPage {
 
 
   constructor(public navCtrl: NavController,
-    private navParams: NavParams,
-    private fdb : AngularFireDatabase,
-    private toastService: ToastService,
+    public navParams: NavParams,
+    public fdb : AngularFireDatabase,
+    public toastService: ToastService,
     ) {
       this.key_user = navParams.get("key_user");
  
   }
   
-  delete_firebase (item){    
-    console.log('remove key : '+item);
-    this.fdb.list("/all_user/").remove(item);
-    
-  }
+  
 
   
    add_firebase(){  

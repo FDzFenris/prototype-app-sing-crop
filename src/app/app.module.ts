@@ -55,7 +55,7 @@ var firebaseConfig = {
   ],
   providers: [
     StatusBar,
-    ToastService,
+    ToastService,   
     SplashScreen,
     AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

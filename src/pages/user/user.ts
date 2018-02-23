@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams,Platform } from 'ionic-angular';
-import { HomePage } from '../home/home';
+//import { HomePage } from '../home/home';
 import { AngularFireDatabase } from 'angularfire2/database';
 
-//import { ToastService } from '../../providers/toastService';
 
 import { ManageUserPage } from '../manage-user/manage-user'
 
@@ -18,14 +17,12 @@ export class user  {
  
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
-     public platform: Platform, 
-     //private toastService: ToastService,
-     private manage_user :ManageUserPage,
+     public platform: Platform,        
      public fdb : AngularFireDatabase){
  
     this.firstParam = navParams.get("firstPassed");
     this.secondParam = navParams.get("secondPassed");
-   // HomePage.checkhome();
+
   
 
               
@@ -59,8 +56,11 @@ export class user  {
     })
   }
 
- this.manage_user.delete_firebase()
-
+  delete_firebase (item){    
+    console.log('remove key : '+item);
+    this.fdb.list("/all_user/").remove(item);
+    
+  }
  
   ionViewDidLoad() {
     console.log('ionViewDidLoad OtherPage');
