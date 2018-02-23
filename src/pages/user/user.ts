@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams,Platform } from 'ionic-angular';
 //import { HomePage } from '../home/home';
 import { AngularFireDatabase } from 'angularfire2/database';
-
+import { ToastService } from '../../providers/toastService';
 
 import { ManageUserPage } from '../manage-user/manage-user'
 
@@ -17,7 +17,8 @@ export class user  {
  
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
-     public platform: Platform,        
+     public platform: Platform,   
+     public toastService: ToastService,     
      public fdb : AngularFireDatabase){
  
     this.firstParam = navParams.get("firstPassed");
@@ -59,7 +60,7 @@ export class user  {
   delete_firebase (item){    
     console.log('remove key : '+item);
     this.fdb.list("/all_user/").remove(item);
-    
+    this.toastService.Error_Toast('ลบข้อมูลสำเร็จแล้ว');
   }
  
   ionViewDidLoad() {

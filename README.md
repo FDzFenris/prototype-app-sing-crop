@@ -1,5 +1,7 @@
-# FDzFenris FIREBASE+IONIC3
+# FDzFenris 
+# IONIC3
+# AngularFireDatabase2 v5.0
 
 
 
-ionic3sing
+

@@ -7,10 +7,10 @@ export class ToastService {
       // ...
   }
 
-  Success_Toast() {
+  Success_Toast(msg) {
     
         let toast = this.toastCtrl.create({
-          message: 'อัพเดทข้อมูลสำเร็จ',
+          message: msg,
           duration: 1500,
           position: 'bottom',
           cssClass: "toast-success"
@@ -24,10 +24,10 @@ export class ToastService {
       
   }
 
-  Error_Toast() {
+  Error_Toast(msg) {
     
     let toast = this.toastCtrl.create({
-      message: 'อัพเดทข้อมูลไม่สำเร็จ',
+      message: msg,
       duration: 1500,
       position: 'bottom',
       cssClass: "error-success"
