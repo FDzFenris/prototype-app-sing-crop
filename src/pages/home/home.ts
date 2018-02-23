@@ -5,7 +5,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { user } from '../user/user'
 
 import { AngularFireDatabase } from 'angularfire2/database';
-import {Injectable} from "@angular/core";
+
 
 //////อ้างอิงจาก//////
 ///// https://github.com/angular/angularfire2/blob/master/docs/version-5-upgrade.md
@@ -15,7 +15,7 @@ import {Injectable} from "@angular/core";
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-@Injectable()
+
 export class HomePage {
 
   user_all= [];
@@ -41,13 +41,11 @@ export class HomePage {
       this.user_all = _data;
       console.log(this.user_all);
     }); */
-    this.checkhome()
+    
   }
 
-  public checkhome(){
-    console.log("home")
-  }
-  navigate() {
+  
+  manage_user() {
     this.navCtrl.push(user, {
       firstPassed: "ADMIN1",
       secondPassed: "ADMIN2"

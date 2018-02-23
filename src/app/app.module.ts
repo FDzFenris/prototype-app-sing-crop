@@ -12,6 +12,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
 import { user } from '../pages/user/user';
+import { ManageUserPage } from '../pages/manage-user/manage-user'
+
 import { ToastService } from '../providers/toastService';
 
 import { AngularFireModule } from 'angularfire2';
@@ -33,7 +35,8 @@ var firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
-    user
+    user,
+    ManageUserPage
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ var firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    user
+    user,
+    ManageUserPage
   ],
   providers: [
     StatusBar,

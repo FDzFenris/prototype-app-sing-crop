@@ -11,7 +11,7 @@
  
   <h1>
      CHECK
-     <button ion-button (click)="navigate()">จัดการข้อมูลพนักงาน</button>
+     <button ion-button  full  round (click)="manage_user()">จัดการข้อมูลพนักงาน</button>
     
     <button ion-button color="dark" full round (click)=" scan_checkin() ">checkin</button>
   </h1>
@@ -22,53 +22,6 @@
 
     <hr>
 
-  <h1>ข้อมูลพนักงาน</h1>
-
-  
-  <!-- <form (ngSubmit)="add_firebase(registerForm)" #registerForm="ngForm">
-      <label for="name"> username</label>
-      <input type="text" class="input_custom1" name="username" ngModel>
-      <label for="description"> password</label>
-      <input type="text" class="input_custom1 form-control"  name="password" ngModel>
-     
-     
-      <button ion-button  full round color="dark"  type="submit">Submit</button>
-  </form> -->
-
  
-  <ion-list>
-      <ion-card>
-          <ion-item *ngFor="let item_user of user_all; let i = index;" >
-
-          
-
-          
-            <ion-grid>
-                <ion-row>
-                  <ion-col col-12>{{item_user.fname}} - {{item_user.lname}}  </ion-col>
-                
-                          <ion-col col-12>                          
-                            <button ion-button small (click)="update_firebase(item_user.key)" class="button">Update{{i+1}}</button> 
-                            <button ion-button  small  color="danger" (click)="delete_firebase(item_user.key)" class="button">Delete{{i+1}}</button> 
-                          </ion-col>
-        
-                       
-                     
-                    
-                </ion-row>
-                
-            </ion-grid>
-
-          
-          
-
-           
-
-            
-          
-          </ion-item>
-
-    </ion-card>
-  </ion-list>
 
 </ion-content>

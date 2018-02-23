@@ -5,6 +5,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
 
 import { ToastService } from '../../providers/toastService';
 
+import { ManageUserPage } from '../manage-user/manage-user'
+
 @Component({
   selector: 'page-user',
   templateUrl: 'user.html',
@@ -13,6 +15,7 @@ export class user  {
   public firstParam;
   public secondParam;
   private todouser = <any>{};
+  user_all= [];
  
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
@@ -23,25 +26,48 @@ export class user  {
     this.firstParam = navParams.get("firstPassed");
     this.secondParam = navParams.get("secondPassed");
    // HomePage.checkhome();
-   this.toastService.showToast();
+  
+
+              
+          this.fdb.list('/all_user/').snapshotChanges().map(actions => {
+            this.user_all = actions.map(action => ({ key: action.key, ...action.payload.val() }));
+        }).subscribe(items => {
+            //return items.map(item => item.key);
+        });
+        
+        /////////กรณี แบบเดิม  v.4.0  (ใช้ไม่ได้แล้ว)////////
+        /*  this.fdb.list('/all_user/').valueChanges().subscribe(_data=>{
+
+          this.user_all = _data;
+          console.log(this.user_all);
+        }); */
+        
   }
 
  
-
- 
-  add_firebase(){
-   
-
-    /////////กรณี  v.5.0  (ใช้งานได้)////////
-    const afList = this.fdb.list('/all_user/');
-    afList.push({ fname: this.todouser.fname_update,lname: this.todouser.lname_update,number_id: this.todouser.number_id,phone: this.todouser.phone  });
-    const listObservable = afList.snapshotChanges();
-    listObservable.subscribe(); 
+  Register() {
+    this.navCtrl.push(ManageUserPage, {
+      firstPassed: "ADMIN1",
+      secondPassed: "ADMIN2"
+    })
   }
 
+  edit_user(key) {
+    this.navCtrl.push(ManageUserPage, {
+      key_user: key,
+    
+    })
+  }
+
+ 
+  delete_firebase (item){
+    
+    console.log('remove key : '+item);
+    this.fdb.list("/all_user/").remove(item);
+  }
  
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OtherPage'+HomePage);
+    console.log('ionViewDidLoad OtherPage');
   }
  
   goBack() {

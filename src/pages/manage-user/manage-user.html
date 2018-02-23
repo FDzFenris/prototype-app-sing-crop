@@ -1,0 +1,38 @@
+<!--
+  Generated template for the ManageUserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title >{{title | uppercase}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <ion-label floating>ชื่อ </ion-label>
+    <ion-input type="text"  [(ngModel)]="todouser.fname_update" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>นามสกุล </ion-label>
+    <ion-input type="text"  [(ngModel)]="todouser.lname_update" ></ion-input>
+  </ion-item>
+  <ion-item>
+   <ion-label floating>เลขบัตรประชาชน </ion-label>
+    <ion-input type="text"  [(ngModel)]="todouser.number_id" ></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label floating>เบอร์โทร </ion-label>
+       <ion-input type="text"  [(ngModel)]="todouser.phone" ></ion-input>
+  </ion-item>
+
+  <button ion-button  full round    color="secondary"  (click)="add_firebase()" class="button button_save">SAVE</button>
+
+  <button ion-button  full round     (click)="update_firebase(this.key_user)" class="button button_update"> UPDATE</button>
+
+</ion-content>

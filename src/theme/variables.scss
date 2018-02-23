@@ -42,6 +42,12 @@ $colors: (
 );
 
 
+.toast-success {
+  > div{
+       background-color:#13a03b!important;
+   }
+}
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
