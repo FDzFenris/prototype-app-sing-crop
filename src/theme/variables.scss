@@ -48,6 +48,12 @@ $colors: (
    }
 }
 
+.error-success {
+  > div{
+       background-color:#c22525!important;
+   }
+}
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here

@@ -3,7 +3,7 @@ import { NavController, NavParams,Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AngularFireDatabase } from 'angularfire2/database';
 
-import { ToastService } from '../../providers/toastService';
+//import { ToastService } from '../../providers/toastService';
 
 import { ManageUserPage } from '../manage-user/manage-user'
 
@@ -13,14 +13,14 @@ import { ManageUserPage } from '../manage-user/manage-user'
 })
 export class user  {
   public firstParam;
-  public secondParam;
-  private todouser = <any>{};
+  public secondParam; 
   user_all= [];
  
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      public platform: Platform, 
-     private toastService: ToastService,
+     //private toastService: ToastService,
+     private manage_user :ManageUserPage,
      public fdb : AngularFireDatabase){
  
     this.firstParam = navParams.get("firstPassed");
@@ -59,12 +59,8 @@ export class user  {
     })
   }
 
- 
-  delete_firebase (item){
-    
-    console.log('remove key : '+item);
-    this.fdb.list("/all_user/").remove(item);
-  }
+ this.manage_user.delete_firebase()
+
  
   ionViewDidLoad() {
     console.log('ionViewDidLoad OtherPage');
@@ -73,5 +69,6 @@ export class user  {
   goBack() {
     console.log("popping");
     this.navCtrl.pop();
+    
   }
 }

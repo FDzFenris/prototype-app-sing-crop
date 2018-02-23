@@ -53,36 +53,6 @@ export class HomePage {
   }
   
 
- /*  add_firebase(data: NgForm){
-   /////////กรณี  v.4.0  (ใช้งานได้)////////
-    this.fdb.list("/all_user/").push(data.value);
-  } */
-
-  add_firebase(){
-    /////////กรณี  v.5.0  (ใช้งานได้)////////
-    const afList = this.fdb.list('/all_user/');
-    afList.push({ fname: this.todo.fname_update,lname: this.todo.lname_update,number_id: this.todo.number_id,phone: this.todo.phone  });
-    const listObservable = afList.snapshotChanges();
-    listObservable.subscribe(); 
-  }
-    
-  delete_firebase (item){
-    
-    console.log('remove key : '+item);
-    this.fdb.list("/all_user/").remove(item);
-  }
-
-  update_firebase(item){
-    console.log(this.todo);
-    console.log(this.fdb.list("/all_user/").update(item,{ fname: this.todo.fname_update,lname: this.todo.lname_update,number_id: this.todo.number_id,phone: this.todo.phone  }));
-
-  }
-
-
-
-
-  
-
 
     public scan_checkin() {
 
