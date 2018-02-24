@@ -56,7 +56,10 @@ export class user  {
     })
   }
 
-  delete_firebase (item){    
+  delete_firebase (item){
+    
+    console.log(this.toastService.ALear_Confirm('คุณต้องการลบข้อมูลนี้ใช่หรือไม่ ?'));
+
     console.log('remove key : '+item);
     this.fdb.list("/all_user/").remove(item);
     this.toastService.Error_Toast('ลบข้อมูลสำเร็จแล้ว');

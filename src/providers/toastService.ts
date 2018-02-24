@@ -1,9 +1,13 @@
 import {Injectable} from "@angular/core";
 import { ToastController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class ToastService {
-  constructor(private toastCtrl: ToastController) {
+  constructor(
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController
+  ) {
       // ...
   }
 
@@ -39,6 +43,32 @@ export class ToastService {
   
     toast.present();
   
+}
+
+ALear_Confirm(msg) {
+  let alert = this.alertCtrl.create({
+    title: 'CONFIRM BOX',
+    message: msg,
+    buttons: [
+      {
+        text: 'ยกเลิก',
+        role: 'cancel',
+        handler: () => {
+          
+          console.log('Cancel clicked');
+          return false;
+        }
+      },
+      {
+        text: 'ยืนยัน',
+        handler: () => {
+          console.log('Buy clicked');
+          return true;
+        }
+      }
+    ]
+  });
+  alert.present();
 }
 
 
