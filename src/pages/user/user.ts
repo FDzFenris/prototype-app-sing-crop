@@ -52,8 +52,7 @@ export class user  {
 
   edit_user(key) {
     this.navCtrl.push(ManageUserPage, {
-      key_user: key,
-    
+      key_user: key,    
     })
   }
 
@@ -64,12 +63,11 @@ export class user  {
   }
  
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OtherPage');
+    console.log('LIVE IN USERPAGE');
   }
  
   goBack() {
-    console.log("popping");
-    this.navCtrl.pop();
-    
+    //console.log("popping");
+    this.navCtrl.pop();    
   }
 }

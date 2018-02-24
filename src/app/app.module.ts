@@ -12,6 +12,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
 import { user } from '../pages/user/user';
+import { CheckinPage } from '../pages/checkin/checkin';
 import { ManageUserPage } from '../pages/manage-user/manage-user'
 
 import { ToastService } from '../providers/toastService';
@@ -36,6 +37,7 @@ var firebaseConfig = {
     MyApp,
     HomePage,
     user,
+    CheckinPage,
     ManageUserPage
   ],
   imports: [
@@ -51,6 +53,7 @@ var firebaseConfig = {
     MyApp,
     HomePage,
     user,
+    CheckinPage,
     ManageUserPage
   ],
   providers: [

@@ -3,9 +3,11 @@ import { NavController,Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { user } from '../user/user'
+import { CheckinPage } from '../checkin/checkin'
 
 import { AngularFireDatabase } from 'angularfire2/database';
 
+import { ToastService } from '../../providers/toastService';
 
 //////อ้างอิงจาก//////
 ///// https://github.com/angular/angularfire2/blob/master/docs/version-5-upgrade.md
@@ -26,6 +28,7 @@ export class HomePage {
     public platform: Platform,   
     private barcodeScanner: BarcodeScanner,    
     public fdb : AngularFireDatabase,
+    public toastService: ToastService     
     
   ){
     
@@ -52,26 +55,34 @@ export class HomePage {
     })
   }
   
+  Check_in(data1,data2,data3) {
+    this.navCtrl.push(CheckinPage, {
+      DATA_FNAME: data1,
+      DATA_LNAME: data2,
+      NUMBER_ID: data3,
+     
+     
+    })
+  }
 
 
     public scan_checkin() {
 
       /////select * firebase //////  
-      let daynow = new Date().toLocaleString()
+    
       this.barcodeScanner.scan().then((barcodeData) => {        
 
         console.log("scanner")
-        alert("ชนิดของCODE: "+barcodeData.format+ " ข้อมูล: "+barcodeData.text);
+        //alert("ชนิดของCODE: "+barcodeData.format+ " ข้อมูล: "+barcodeData.text);
 
         this.fdb.list('/all_user/', ref => ref.orderByChild('number_id').equalTo(barcodeData.text)).valueChanges().subscribe(_data=>{
           console.log(_data);
           var myJSON = JSON.parse(JSON.stringify(_data));
        
               if(_data.length>0){
-                //alert('ข้อมูลของ : '+myJSON)
-                //console.log(myJSON[0].fname);
+                this.Check_in(myJSON[0].fname,myJSON[0].lname,barcodeData.text);                
             ////////////////////////// insert into    ////////////////////////////////////////////////
-                  const afList = this.fdb.list('/check_in/');
+                 /*  const afList = this.fdb.list('/check_in/');
                   afList.push({ 
                     check_in: barcodeData.text
                     ,check_in_time : daynow
@@ -79,11 +90,11 @@ export class HomePage {
                     ,lname : myJSON[0].lname 
                   });
                   const listObservable = afList.snapshotChanges();
-                  listObservable.subscribe(); 
+                  listObservable.subscribe();  */
 
                 }
                 else{
-                  alert('ไม่มีข้อมูลของบุคคลนี้');                 
+                  this.toastService.Error_Toast('ไม่มีข้อมูลของบุคคลนี้');                 
                 }
 
               });
@@ -113,22 +124,6 @@ export class HomePage {
       });
     }
 
-   /*  public getbarcode(){
-   
-      this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE,this.encodeData).then((encodedData) => {
-
-        console.log(encodedData);
-        this.encodedData = encodedData;
-
-      }, (err) => {
-        console.log("Error occured : " + err);
-        });                 
-     } */
-
-  
-
-
-  
   
   }
 
