@@ -52,7 +52,7 @@ ALear_Confirm(msg) {
     buttons: [
       {
         text: 'ยกเลิก',
-        role: 'cancel',
+     
         handler: () => {
           
           console.log('Cancel clicked');

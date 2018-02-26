@@ -35,7 +35,7 @@ export class CheckinPage {
     let daynow = new Date().toLocaleString();    
     const afList = this.fdb.list('/check_in/');
     afList.push({ 
-      check_in: this.number_id
+      number_id: this.number_id
       ,check_in_time : daynow
       ,fname : this.fname
       ,lname : this.lname

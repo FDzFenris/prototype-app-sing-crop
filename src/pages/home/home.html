@@ -14,4 +14,37 @@
         <button ion-button color="dark" full round (click)=" scan_checkin() ">checkin</button>
       </h1>
     <hr> 
+
+
+    <ion-item *ngFor="let item_check of check_in_all; let i = index;" >
+    
+              
+    
+              
+        <ion-grid>
+            <ion-row>
+              <ion-col col-12>{{item_check.check_in_time}}   </ion-col>
+            
+                      <ion-col col-2>                          
+                       
+                      </ion-col>
+                      <ion-col col-10>                          
+                           {{item_check.fname}} - {{item_check.lname}}
+                        </ion-col>
+    
+                   
+                 
+                
+            </ion-row>
+            
+        </ion-grid>
+
+      
+      
+
+       
+
+        
+      
+      </ion-item>
 </ion-content>

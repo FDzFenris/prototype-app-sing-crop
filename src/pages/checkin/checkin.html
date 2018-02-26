@@ -7,20 +7,27 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>checkin</ion-title>
+    <ion-title>INFO</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-hello checkin
+ข้อมูลส่วนตัว
 
 <ion-grid>
     <ion-row>
       <ion-col col-12>
-        {{ this.fname }} - {{ this.lname }} :  {{ this.number_id }}
+          <ion-list>
+              ชื่อ-นามสกุล : {{ this.fname }} - {{ this.lname }}  
+          </ion-list>
         </ion-col>
+        <ion-col col-12>
+            <ion-list>
+               เลขบัตรประชาชน : {{ this.number_id }}
+            </ion-list>
+          </ion-col>
 
     </ion-row>
 </ion-grid>

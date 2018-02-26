@@ -9,6 +9,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 
 import { ToastService } from '../../providers/toastService';
 
+
 //////อ้างอิงจาก//////
 ///// https://github.com/angular/angularfire2/blob/master/docs/version-5-upgrade.md
 //////อ้างอิงจาก//////
@@ -21,6 +22,7 @@ import { ToastService } from '../../providers/toastService';
 export class HomePage {
 
   user_all= [];
+  check_in_all= [];
   public todo = <any>{};
   
   constructor(
@@ -28,7 +30,8 @@ export class HomePage {
     public platform: Platform,   
     private barcodeScanner: BarcodeScanner,    
     public fdb : AngularFireDatabase,
-    public toastService: ToastService     
+    public toastService: ToastService
+   
     
   ){
     
@@ -38,6 +41,12 @@ export class HomePage {
        //return items.map(item => item.key);
     });
     
+
+    this.fdb.list('/check_in/').snapshotChanges().map(actions => {
+      this.check_in_all = actions.map(action => ({ key: action.key, ...action.payload.val() }));
+   }).subscribe(items => {
+      //return items.map(item => item.key);
+   });
     /////////กรณี แบบเดิม  v.4.0  (ใช้ไม่ได้แล้ว)////////
    /*  this.fdb.list('/all_user/').valueChanges().subscribe(_data=>{
 
@@ -47,6 +56,11 @@ export class HomePage {
     
   }
 
+  getlocation(){
+
+
+   
+  }
   
   manage_user() {
     this.navCtrl.push(user, {
