@@ -13,35 +13,42 @@
         
         <button ion-button color="dark" full round (click)=" scan_checkin() ">checkin</button>
 
-        <button ion-button color="danger" (click)="get_location()" > GetGeo </button>
-
+       <!--  <button ion-button color="danger" (click)="get_location()" > GetGeo </button> -->
+       
+      
+      
       </h1>
     <hr> 
+   
 
-
-    <ion-item *ngFor="let item_check of check_in_all; let i = index;" >
+    <ion-item  class="color_custom1" *ngFor="let item_check of check_in_all.reverse(); let i = index;" >
     
               
+     <!--  <div #map id="map"></div> -->
     
-              
-        <ion-grid>
+        <ion-grid  class="grid_custom1">
+            <ion-card class="card_custom1">    
             <ion-row>
-              <ion-col col-12>{{item_check.check_in_time}}   </ion-col>
+               
+              <ion-col col-6><b>{{item_check.check_in_time}}   </b> </ion-col>
+             {{ this.lat_[i]=item_check.lat}}
+             {{ this.long_[i]=item_check.long}}
+              <ion-col col-6 (click)="find_livefrom(this.lat_[i],this.long_[i])">     </ion-col>
             
-                      <ion-col col-2>                          
-                       
-                      </ion-col>
+              <ion-col col-12>   
+             
+                     <label col-2>ชื่อ-นามสกุล</label>
                       <ion-col col-10>                          
-                           {{item_check.fname}} - {{item_check.lname}}
+                           {{item_check.fname}} - {{item_check.lname}}                          
                         </ion-col>
     
-                   
+                      </ion-col>
                  
-                
+             
             </ion-row>
-            
+          </ion-card>
         </ion-grid>
-
+     
       
       
 

@@ -1,9 +1,19 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ToastService } from '../../providers/toastService';
 import { Geolocation } from '@ionic-native/geolocation';
+import {
+  GoogleMaps,
+ // GoogleMap,
+  //GoogleMapsEvent,
+  //GoogleMapOptions,
+  //CameraPosition,
+  MarkerOptions,
+  Marker
+ } from '@ionic-native/google-maps';
 
+ declare var google;
 /**
  * Generated class for the CheckinPage page.
  *
@@ -20,6 +30,9 @@ export class CheckinPage {
   public fname;
   public lname;
   public number_id;
+
+  @ViewChild('map') mapElement: ElementRef;
+  public map: any;
     
  
   constructor(public navCtrl: NavController, 
@@ -66,9 +79,55 @@ export class CheckinPage {
     
   }
 
+  
+  loadMap() {
+ 
+    console.log('map load');
+      let latLng = new google.maps.LatLng(19.9200254, 99.8613899);
+   
+      let mapOptions = {
+        center: latLng,
+        zoom: 10,
+        tilt: 30,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      
+
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      
+     
+      this.addMarker();
+    
+  }
+  addMarker(){
+ 
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.map.getCenter()
+    });
+   
+    let content = "<h4>FDz!</h4>";         
+   
+    this.addInfoWindow(marker, content);
+   
+  }
+  addInfoWindow(marker, content){
+ 
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+    infoWindow.open(this.map, marker);
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(this.map, marker);
+    });
+   
+  }
+
+
 
   ionViewDidLoad() {
-    
+    this.loadMap();
     console.log('ionViewDidLoad CheckinPage');
   }
 

@@ -38,5 +38,16 @@
 
 
 <button ion-button color="dark" full round (click)="check_in_shop() ">checkin</button>
+
+<ion-buttons end>
+    <button ion-button (click)="loadMap()"><ion-icon name="add"></ion-icon>Add Marker</button>
+ </ion-buttons> 
+
+<ion-card>
+<ion-row>
+<ion-col col-12  #map id="map"></ion-col>
+</ion-row>
+</ion-card>
+
 </ion-content>
 

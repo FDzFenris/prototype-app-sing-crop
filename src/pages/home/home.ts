@@ -9,6 +9,10 @@ import { AngularFireDatabase } from 'angularfire2/database';
 
 import { ToastService } from '../../providers/toastService';
 
+import { Http, Headers, RequestOptions } from "@angular/http";
+
+ 
+
 
 //////อ้างอิงจาก//////
 ///// https://github.com/angular/angularfire2/blob/master/docs/version-5-upgrade.md
@@ -24,14 +28,20 @@ export class HomePage {
   user_all= [];
   check_in_all= [];
   public todo = <any>{};
-  
+  lat_= [];
+  long_= [];
+
+
+
   
   constructor(
     public navCtrl: NavController, 
     public platform: Platform,   
     private barcodeScanner: BarcodeScanner,    
     public fdb : AngularFireDatabase,
-    public toastService: ToastService
+    public toastService: ToastService,
+    public http:Http,
+ 
     
    
     
@@ -56,7 +66,35 @@ export class HomePage {
       console.log(this.user_all);
     }); */
     
+
   }
+
+
+ find_livefrom(lat=0,long=0){
+  let post_to_api = {}
+
+  var headers = new Headers();
+  headers.append('Content-Type', 'application/x-www-form-urlencoded');
+  let options = new RequestOptions({ headers: headers });
+  this.http.post('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long, JSON.stringify(post_to_api), options)
+  .subscribe(data => {
+    //console.log(data);
+
+ let api_google_map = JSON.parse(data['_body']);
+
+  console.log(api_google_map);
+
+  
+    //console.log(data_api2);
+
+
+   
+
+  }, error => {
+     console.log(error); 
+  });
+ } 
+
 
  get_location(){
   this.toastService.getGeo()
@@ -140,6 +178,9 @@ export class HomePage {
       });
     }
 
+    ionViewDidLoad(){
+     
+    }
   
   }
 
