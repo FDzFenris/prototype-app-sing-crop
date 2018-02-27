@@ -1,12 +1,17 @@
 import {Injectable} from "@angular/core";
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @Injectable()
 export class ToastService {
+  public localStorage=[];
   constructor(
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private geolocation: Geolocation,
+    private nativeStorage: NativeStorage
   ) {
       // ...
   }
@@ -45,6 +50,24 @@ export class ToastService {
   
 }
 
+getGeo(){
+this.geolocation.getCurrentPosition().then((resp) => {
+// resp.coords.latitude
+// resp.coords.longitude
+//console.log(resp.coords.latitude);
+//console.log(resp.coords.longitude);
+//console.log(resp);
+this.nativeStorage.setItem('lat',""+resp.coords.latitude);
+this.nativeStorage.setItem('long',""+resp.coords.longitude);
+alert(resp.coords.latitude+"/"+resp.coords.longitude);
+//console.log(`lat:${this.nativeStorage.getItem('lat')}`) ;
+}).catch((error) => {
+//alert('Error getting location'+JSON.stringify(error));
+});
+}
+
+
+
 ALear_Confirm(msg) {
   let alert = this.alertCtrl.create({
     title: 'CONFIRM BOX',
@@ -70,7 +93,5 @@ ALear_Confirm(msg) {
   });
   alert.present();
 }
-
-
-  
 }
+

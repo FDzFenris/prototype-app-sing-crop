@@ -25,12 +25,14 @@ export class HomePage {
   check_in_all= [];
   public todo = <any>{};
   
+  
   constructor(
     public navCtrl: NavController, 
     public platform: Platform,   
     private barcodeScanner: BarcodeScanner,    
     public fdb : AngularFireDatabase,
     public toastService: ToastService
+    
    
     
   ){
@@ -56,11 +58,11 @@ export class HomePage {
     
   }
 
-  getlocation(){
+ get_location(){
+  this.toastService.getGeo()
+ 
+ }
 
-
-   
-  }
   
   manage_user() {
     this.navCtrl.push(user, {

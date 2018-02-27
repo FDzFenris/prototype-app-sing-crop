@@ -19,7 +19,8 @@ import { ToastService } from '../providers/toastService';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
-
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 var firebaseConfig = {
@@ -58,11 +59,14 @@ var firebaseConfig = {
   ],
   providers: [
     StatusBar,
+    Geolocation,
+    NativeStorage,
     ToastService,   
     SplashScreen,
     AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    BarcodeScanner
+    BarcodeScanner,
+   
    
   ]
 })
