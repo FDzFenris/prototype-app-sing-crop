@@ -20,6 +20,7 @@ import { Http, Headers, RequestOptions } from "@angular/http";
 
 
 
+
 declare var google:any;
 
 
@@ -33,9 +34,11 @@ export class HomePage {
 
   user_all= [];
   check_in_all= [];
+  //public lat_all= [];
+  //public long_all= [];
   public todo = <any>{};
-  public lat_people= [];
-  public long_people= [];
+  public gg_api;
+  
 
   @ViewChild('map') mapRef:ElementRef;
 
@@ -51,16 +54,24 @@ export class HomePage {
    
   ){
     
+
     this.fdb.list('/all_user/').snapshotChanges().map(actions => {
        this.user_all = actions.map(action => ({ key: action.key, ...action.payload.val() }));
+     
     }).subscribe(items => {
-       //return items.map(item => item.key);
+      //console.log(items.map(item => item.key))
+      //return items.map(item => item.key);
     });
     
 
+   
     this.fdb.list('/check_in/').snapshotChanges().map(actions => {
+     
+   
       this.check_in_all = actions.map(action => ({ key: action.key, ...action.payload.val() }));
-      //console.log( this.check_in_all);
+     //this.lat_all =  actions.map(action => ({ lat: action.payload.val().lat}));
+     //this.long_all =  actions.map(action => ({ long: action.payload.val().long}));
+     //console.log(this.lat_all);
    }).subscribe(items => {
       //return items.map(item => item.key);
    });
@@ -71,32 +82,28 @@ export class HomePage {
       console.log(this.user_all);
     }); */
     
-
+    this.gg_api = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
   }
 
 
-   cha(a1,a2){
+  find_locate(){
    
-   /*  let post_to_api = {}
+    
+    let apikey = "&key=AIzaSyCPXKNg-l4wH-60_vX5a7QBF7JnBdBabd0";
+    let post_to_api = {};
+    var link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
     var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     let options = new RequestOptions({ headers: headers });
-    this.http.post('http://maps.googleapis.com/maps/api/geocode/json?latlng='+19.9200283+','+99.861371, JSON.stringify(post_to_api), options)
-    .subscribe(data => { */
-      //console.log(data);
+    this.http.post(link+'19.9708145+,99.8536438'+apikey, JSON.stringify(post_to_api), options)
+      .subscribe(data => { 
+        let api_google_map = JSON.parse(data['_body']);
 
-        //let api_google_map = JSON.parse(data['_body']);
-
-        //console.log(api_google_map);
-        return a1+"/"+a2;
-
-        //console.log(data_api2);
-
-
-      
-
-     /*  }); */
-    
+        console.log(api_google_map.results[1].formatted_address);
+   }, error => {
+   
+    alert(error);
+  }); 
      
    }
 

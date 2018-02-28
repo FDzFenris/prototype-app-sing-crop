@@ -5,6 +5,7 @@ import { ToastService } from '../../providers/toastService';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LoadingController } from 'ionic-angular';
 
+import { Http, Headers, RequestOptions } from "@angular/http";
  declare var google;
 /**
  * Generated class for the CheckinPage page.
@@ -26,6 +27,8 @@ export class CheckinPage {
   public lat_con;
   public long_con;
 
+  public live_zone;
+
   mapReady: boolean = false;
   @ViewChild('map') mapElement: ElementRef;
   map:any;
@@ -36,6 +39,7 @@ export class CheckinPage {
     public fdb : AngularFireDatabase,
     public toastService: ToastService,
     public loadingCtrl: LoadingController,
+    public http:Http,
     private geolocation: Geolocation
   ) {
     this.fname = navParams.get("DATA_FNAME");
@@ -45,6 +49,26 @@ export class CheckinPage {
   }
  
   protected check_in_shop() {
+
+
+      let apikey = "&key=AIzaSyCPXKNg-l4wH-60_vX5a7QBF7JnBdBabd0";
+      let post_to_api = {};
+      var link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+      let options = new RequestOptions({ headers: headers });
+      this.http.post(link+this.lat_con+','+this.long_con+apikey, JSON.stringify(post_to_api), options)
+        .subscribe(data => { 
+          let api_google_map = JSON.parse(data['_body']);
+
+          this.live_zone =api_google_map.results[1].formatted_address;
+     }, error => {
+     
+      //alert(error);
+    }); 
+      
+
+
       let daynow = new Date().toLocaleString();    
       const afList = this.fdb.list('/check_in/');
       afList.push({ 
@@ -54,6 +78,7 @@ export class CheckinPage {
         ,lname : this.lname
         ,lat : this.lat_con
         ,long : this.long_con
+        ,live_zone : this.live_zone
       });
       const listObservable = afList.snapshotChanges();
       listObservable.subscribe(); 
@@ -105,7 +130,7 @@ export class CheckinPage {
       position: this.map.getCenter()
     });
    
-    let content = "<h4>Information!</h4>";         
+    let content = "<h4>you live!</h4>";         
    
     this.addInfoWindow(marker, content);
    
