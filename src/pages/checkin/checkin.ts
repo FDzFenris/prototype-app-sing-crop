@@ -3,12 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ToastService } from '../../providers/toastService';
 import { Geolocation } from '@ionic-native/geolocation';
-
-import {GoogleMaps
-  ,GoogleMap
-  //,GoogleMapsEvent
-  //,Marker,GoogleMapsAnimation,MyLocation
-} from '@ionic-native/google-maps';
+import { LoadingController } from 'ionic-angular';
 
  declare var google;
 /**
@@ -28,29 +23,28 @@ export class CheckinPage {
   public lname;
   public number_id;
 
+  public lat_con;
+  public long_con;
+
   mapReady: boolean = false;
   @ViewChild('map') mapElement: ElementRef;
-  public map:GoogleMap;
+  map:any;
     
  
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public fdb : AngularFireDatabase,
     public toastService: ToastService,
-    public googleMaps: GoogleMaps,
+    public loadingCtrl: LoadingController,
     private geolocation: Geolocation
   ) {
     this.fname = navParams.get("DATA_FNAME");
     this.lname = navParams.get("DATA_LNAME");
     this.number_id = navParams.get("NUMBER_ID");
+   
   }
  
   protected check_in_shop() {
-   
-      this.geolocation.getCurrentPosition().then((resp) => {     
-      //this.location = [{lat:resp.coords.latitude,long:resp.coords.longitude}];   
-
-
       let daynow = new Date().toLocaleString();    
       const afList = this.fdb.list('/check_in/');
       afList.push({ 
@@ -58,37 +52,40 @@ export class CheckinPage {
         ,check_in_time : daynow
         ,fname : this.fname
         ,lname : this.lname
-        ,lat : resp.coords.latitude
-        ,long : resp.coords.longitude
+        ,lat : this.lat_con
+        ,long : this.long_con
       });
       const listObservable = afList.snapshotChanges();
       listObservable.subscribe(); 
       this.toastService.Success_Toast('เช็คอินแล้ว');
-      
-
-      }).catch((error) => {
-        alert('กรุณาเปิดgps');
-      });
-
-     
-      
-      
-    
-    
-    
   }
-
+  Loading(time) {
+    let loading = this.loadingCtrl.create({
+      content: 'loading ...'
+    });
   
-  loadMap() {
+    loading.present();
+  
+    setTimeout(() => {
+    
+      loading.dismiss();
+    }, time);
+  }
+  loadMap(lat2,long2) {
+
+    this.Loading(500);
  
-    console.log('map load');
-    this.geolocation.getCurrentPosition().then((resp) => {   
+    //alert(lat2+"  / /  "+long2);
+    //console.log('map load');
+  
      
-      let latLng = new google.maps.LatLng( resp.coords.latitude,resp.coords.longitude);
-   
+     // let lat2 =  this.lat_con;
+      //let long2 =  this.long_con;
+      //let latLng = new google.maps.LatLng( resp.coords.latitude,resp.coords.longitude);
+      let latLng = new google.maps.LatLng(lat2,long2);
       let mapOptions = {
         center: latLng,
-        zoom: 10,
+        zoom: 18,
         tilt: 30,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
@@ -96,16 +93,50 @@ export class CheckinPage {
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       
-     
-    });
+      this.addMarker();
     
+  }
+
+  addMarker(){
+ 
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.map.getCenter()
+    });
+   
+    let content = "<h4>Information!</h4>";         
+   
+    this.addInfoWindow(marker, content);
+   
+  }
+  addInfoWindow(marker, content){
+   
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+   
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(this.map, marker);
+    });
+   
   }
 
 
 
   ionViewDidLoad() {
-    this.loadMap();
-    console.log('ionViewDidLoad CheckinPage');
+    this.Loading(1000);
+    this.geolocation.getCurrentPosition().then((resp) => { 
+      this.lat_con= resp.coords.latitude;
+      this.long_con= resp.coords.longitude;
+      this.loadMap(this.lat_con,this.long_con);
+    }).catch((error) => {
+      alert('กรุณาเปิดgps');
+    });
+
+
+    
+   // console.log('ionViewDidLoad CheckinPage');
   }
 
 }

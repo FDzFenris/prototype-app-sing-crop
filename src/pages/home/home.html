@@ -13,25 +13,28 @@
         <button ion-button  full  round (click)="manage_user()">จัดการข้อมูลพนักงาน</button>
         
         <button ion-button color="dark" full round (click)=" scan_checkin() ">checkin</button>
-        <button ion-button color="dark" full round (click)=" check() ">check</button>
+        <!-- <button ion-button color="dark" full round (click)=" check() ">check</button> -->
 
        <!--  <button ion-button color="danger" (click)="get_location()" > GetGeo </button> -->      
       
       
       </h1>
     <hr> 
-    <div #map id="map" >11</div>
+    <!-- <div #map id="map" >11</div> -->
 
-    <ion-item  class="color_custom1" *ngFor="let item_check of check_in_all.reverse(); let i = index;" >
-    
-              
- 
+    <ion-item  class="color_custom1" *ngFor="let item_check of check_in_all.reverse(); let i = index; " >
+      this.lat_people[i] = this.check_in_all[i]; 
+
+
+     
+     
     
         <ion-grid  class="grid_custom1">
             <ion-card class="card_custom1">    
             <ion-row>
                
               <ion-col col-6><b>{{item_check.check_in_time}}   </b> </ion-col>
+              <ion-col col-6><b>{{this.cha(item_check.lat,item_check.long)}}  </b> </ion-col>
            
              
             

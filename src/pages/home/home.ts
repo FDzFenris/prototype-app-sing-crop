@@ -34,8 +34,8 @@ export class HomePage {
   user_all= [];
   check_in_all= [];
   public todo = <any>{};
-  /* lat_= [];
-  long_= []; */
+  public lat_people= [];
+  public long_people= [];
 
   @ViewChild('map') mapRef:ElementRef;
 
@@ -60,6 +60,7 @@ export class HomePage {
 
     this.fdb.list('/check_in/').snapshotChanges().map(actions => {
       this.check_in_all = actions.map(action => ({ key: action.key, ...action.payload.val() }));
+      //console.log( this.check_in_all);
    }).subscribe(items => {
       //return items.map(item => item.key);
    });
@@ -74,7 +75,30 @@ export class HomePage {
   }
 
 
+   cha(a1,a2){
    
+   /*  let post_to_api = {}
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    let options = new RequestOptions({ headers: headers });
+    this.http.post('http://maps.googleapis.com/maps/api/geocode/json?latlng='+19.9200283+','+99.861371, JSON.stringify(post_to_api), options)
+    .subscribe(data => { */
+      //console.log(data);
+
+        //let api_google_map = JSON.parse(data['_body']);
+
+        //console.log(api_google_map);
+        return a1+"/"+a2;
+
+        //console.log(data_api2);
+
+
+      
+
+     /*  }); */
+    
+     
+   }
 
   check(){
    
@@ -92,7 +116,31 @@ export class HomePage {
     this.map = new google.maps.Map(this.mapRef.nativeElement,options);
  
 
+    this.addMarker();
   }
+  addMarker(){ 
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.map.getCenter()
+      });
+ 
+    let content = "<h4>Information!</h4>";         
+  
+    this.addInfoWindow(marker, content);
+ 
+}
+addInfoWindow(marker, content){
+ 
+      let infoWindow = new google.maps.InfoWindow({
+        content: content
+      });
+    
+      google.maps.event.addListener(marker, 'click', () => {
+        infoWindow.open(this.map, marker);
+      });
+ 
+}
 
  find_livefrom(lat=0,long=0){
       let post_to_api = {}
