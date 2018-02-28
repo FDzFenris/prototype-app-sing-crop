@@ -82,7 +82,9 @@ export class CheckinPage {
   loadMap() {
  
     console.log('map load');
-      let latLng = new google.maps.LatLng(19.9200254, 99.8613899);
+    this.geolocation.getCurrentPosition().then((resp) => {   
+     
+      let latLng = new google.maps.LatLng( resp.coords.latitude,resp.coords.longitude);
    
       let mapOptions = {
         center: latLng,
@@ -95,7 +97,7 @@ export class CheckinPage {
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       
      
-  
+    });
     
   }
 

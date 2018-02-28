@@ -1,9 +1,9 @@
-import {Injectable,ViewChild, ElementRef  } from "@angular/core";
+import {Injectable} from "@angular/core";
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeStorage } from '@ionic-native/native-storage';
-//import { GoogleMaps,GoogleMap,GoogleMapsEvent} from '@ionic-native/google-maps';
+
 
 
 @Injectable()
