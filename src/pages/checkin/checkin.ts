@@ -3,15 +3,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ToastService } from '../../providers/toastService';
 import { Geolocation } from '@ionic-native/geolocation';
-import {
-  GoogleMaps,
- // GoogleMap,
-  //GoogleMapsEvent,
-  //GoogleMapOptions,
-  //CameraPosition,
-  MarkerOptions,
-  Marker
- } from '@ionic-native/google-maps';
+
+import {GoogleMaps
+  ,GoogleMap
+  //,GoogleMapsEvent
+  //,Marker,GoogleMapsAnimation,MyLocation
+} from '@ionic-native/google-maps';
 
  declare var google;
 /**
@@ -31,14 +28,16 @@ export class CheckinPage {
   public lname;
   public number_id;
 
+  mapReady: boolean = false;
   @ViewChild('map') mapElement: ElementRef;
-  public map: any;
+  public map:GoogleMap;
     
  
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public fdb : AngularFireDatabase,
     public toastService: ToastService,
+    public googleMaps: GoogleMaps,
     private geolocation: Geolocation
   ) {
     this.fname = navParams.get("DATA_FNAME");
@@ -96,32 +95,8 @@ export class CheckinPage {
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       
      
-      this.addMarker();
+  
     
-  }
-  addMarker(){
- 
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: this.map.getCenter()
-    });
-   
-    let content = "<h4>FDz!</h4>";         
-   
-    this.addInfoWindow(marker, content);
-   
-  }
-  addInfoWindow(marker, content){
- 
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
-    });
-    infoWindow.open(this.map, marker);
-    google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
-    });
-   
   }
 
 

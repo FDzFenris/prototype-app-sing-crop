@@ -7,33 +7,33 @@
 </ion-header>
 
 <ion-content padding>
+  
       <h1>
         CHECK
         <button ion-button  full  round (click)="manage_user()">จัดการข้อมูลพนักงาน</button>
         
         <button ion-button color="dark" full round (click)=" scan_checkin() ">checkin</button>
+        <button ion-button color="dark" full round (click)=" check() ">check</button>
 
-       <!--  <button ion-button color="danger" (click)="get_location()" > GetGeo </button> -->
-       
+       <!--  <button ion-button color="danger" (click)="get_location()" > GetGeo </button> -->      
       
       
       </h1>
     <hr> 
-   
+    <div #map id="map" >11</div>
 
     <ion-item  class="color_custom1" *ngFor="let item_check of check_in_all.reverse(); let i = index;" >
     
               
-     <!--  <div #map id="map"></div> -->
+ 
     
         <ion-grid  class="grid_custom1">
             <ion-card class="card_custom1">    
             <ion-row>
                
               <ion-col col-6><b>{{item_check.check_in_time}}   </b> </ion-col>
-             {{ this.lat_[i]=item_check.lat}}
-             {{ this.long_[i]=item_check.long}}
-              <ion-col col-6 (click)="find_livefrom(this.lat_[i],this.long_[i])">     </ion-col>
+           
+             
             
               <ion-col col-12>   
              
@@ -49,12 +49,6 @@
           </ion-card>
         </ion-grid>
      
-      
-      
-
-       
-
-        
-      
+    
       </ion-item>
 </ion-content>

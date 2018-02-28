@@ -22,15 +22,8 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeStorage } from '@ionic-native/native-storage';
 
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker
- } from '@ionic-native/google-maps';
+/* import {GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,
+  CameraPosition,MarkerOptions,Marker} from '@ionic-native/google-maps'; */
 
 
 
@@ -71,13 +64,13 @@ var firebaseConfig = {
   providers: [
     StatusBar,
     Geolocation,
-    NativeStorage,
-    GoogleMaps,
+    NativeStorage,    
     ToastService,   
     SplashScreen,
     AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BarcodeScanner,
+
    
    
   ]

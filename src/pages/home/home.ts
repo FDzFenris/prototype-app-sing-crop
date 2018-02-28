@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild, ElementRef } from '@angular/core';
 import { NavController,Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -6,17 +6,23 @@ import { user } from '../user/user'
 import { CheckinPage } from '../checkin/checkin'
 
 import { AngularFireDatabase } from 'angularfire2/database';
+//////อ้างอิงจาก//////
+///// https://github.com/angular/angularfire2/blob/master/docs/version-5-upgrade.md
+//////อ้างอิงจาก//////
+
 
 import { ToastService } from '../../providers/toastService';
 
 import { Http, Headers, RequestOptions } from "@angular/http";
 
- 
 
 
-//////อ้างอิงจาก//////
-///// https://github.com/angular/angularfire2/blob/master/docs/version-5-upgrade.md
-//////อ้างอิงจาก//////
+
+
+
+declare var google:any;
+
+
 
 @Component({
   selector: 'page-home',
@@ -28,11 +34,12 @@ export class HomePage {
   user_all= [];
   check_in_all= [];
   public todo = <any>{};
-  lat_= [];
-  long_= [];
+  /* lat_= [];
+  long_= []; */
 
+  @ViewChild('map') mapRef:ElementRef;
 
-
+  map:any;
   
   constructor(
     public navCtrl: NavController, 
@@ -41,10 +48,7 @@ export class HomePage {
     public fdb : AngularFireDatabase,
     public toastService: ToastService,
     public http:Http,
- 
-    
    
-    
   ){
     
     this.fdb.list('/all_user/').snapshotChanges().map(actions => {
@@ -70,17 +74,37 @@ export class HomePage {
   }
 
 
+   
+
+  check(){
+   
+    console.log('load map');
+    //console.log(this.mapRef);
+
+   const localtion = new google.maps.LatLng(19.9200254, 99.8613899);
+
+    const options={
+      center : localtion,
+      zoom:15,
+      tilt: 30,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    this.map = new google.maps.Map(this.mapRef.nativeElement,options);
+ 
+
+  }
+
  find_livefrom(lat=0,long=0){
-  let post_to_api = {}
+      let post_to_api = {}
 
-  var headers = new Headers();
-  headers.append('Content-Type', 'application/x-www-form-urlencoded');
-  let options = new RequestOptions({ headers: headers });
-  this.http.post('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long, JSON.stringify(post_to_api), options)
-  .subscribe(data => {
-    //console.log(data);
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+      let options = new RequestOptions({ headers: headers });
+      this.http.post('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long, JSON.stringify(post_to_api), options)
+      .subscribe(data => {
+        //console.log(data);
 
- let api_google_map = JSON.parse(data['_body']);
+    let api_google_map = JSON.parse(data['_body']);
 
   console.log(api_google_map);
 
@@ -179,7 +203,8 @@ export class HomePage {
     }
 
     ionViewDidLoad(){
-     
+     //this.check();
+ 
     }
   
   }
