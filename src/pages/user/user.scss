@@ -3,4 +3,25 @@
 
 page-user {
     font-family: 'Athiti', sans-serif;
+
+    .col_setiing1{
+        font-size: 14px;
+    }
+    .color_custom1{
+        color: rgb(202, 4, 4);
+        background-color: rgb(221, 221, 221);
+        height: 90px;
+    }
+    .card_custom1{
+    
+        color: rgb(245, 245, 245);
+        background-color: rgb(54, 54, 54);
+        height: 70px;
+        width: 110%;
+        margin-left: -5px;
+    }
+    .grid_custom1{
+        height: 120px;
+        margin-top: 15px
+    }
 }

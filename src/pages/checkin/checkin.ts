@@ -50,39 +50,47 @@ export class CheckinPage {
  
   protected check_in_shop() {
 
+    if (typeof this.lat_con === 'undefined' ||typeof this.lat_con === 'undefined'  ) {
+    
+      alert('เครื่องมีปัญหา ไม่พบพิกัด พิกัดตอนนี้ = '+this.lat_con+" / "+this.lat_con);}
 
-      let apikey = "&key=AIzaSyCPXKNg-l4wH-60_vX5a7QBF7JnBdBabd0";
-      let post_to_api = {};
-      var link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      let options = new RequestOptions({ headers: headers });
-      this.http.post(link+this.lat_con+','+this.long_con+apikey, JSON.stringify(post_to_api), options)
-        .subscribe(data => { 
-          let api_google_map = JSON.parse(data['_body']);
+      else{
+        let apikey = "&key=AIzaSyCPXKNg-l4wH-60_vX5a7QBF7JnBdBabd0";
+        let post_to_api = {};
+        var link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        let options = new RequestOptions({ headers: headers });
+        this.http.post(link+this.lat_con+','+this.long_con+apikey, JSON.stringify(post_to_api), options)
+          .subscribe(data => { 
+            let api_google_map = JSON.parse(data['_body']);
+  
+            this.live_zone =api_google_map.results[1].formatted_address;
+          }, error => {
+          
+              alert(error);
+          }); 
+        
+  
+  
+        let daynow = new Date().toLocaleString();    
+        const afList = this.fdb.list('/check_in/');
+        afList.push({ 
+          number_id: this.number_id
+          ,check_in_time : daynow
+          ,fname : this.fname
+          ,lname : this.lname
+          ,lat : this.lat_con
+          ,long : this.long_con
+          ,live_zone : this.live_zone
+        });
+        const listObservable = afList.snapshotChanges();
+        listObservable.subscribe(); 
+        this.toastService.Success_Toast('เช็คอินแล้ว');
 
-          this.live_zone =api_google_map.results[1].formatted_address;
-     }, error => {
-     
-      //alert(error);
-    }); 
+      }
+
       
-
-
-      let daynow = new Date().toLocaleString();    
-      const afList = this.fdb.list('/check_in/');
-      afList.push({ 
-        number_id: this.number_id
-        ,check_in_time : daynow
-        ,fname : this.fname
-        ,lname : this.lname
-        ,lat : this.lat_con
-        ,long : this.long_con
-        ,live_zone : this.live_zone
-      });
-      const listObservable = afList.snapshotChanges();
-      listObservable.subscribe(); 
-      this.toastService.Success_Toast('เช็คอินแล้ว');
   }
   Loading(time) {
     let loading = this.loadingCtrl.create({
@@ -97,28 +105,45 @@ export class CheckinPage {
     }, time);
   }
   loadMap(lat2,long2) {
+    this.Loading(800);
+    
 
-    this.Loading(500);
- 
-    //alert(lat2+"  / /  "+long2);
-    //console.log('map load');
-  
+    setTimeout(() => {
+    
      
-     // let lat2 =  this.lat_con;
-      //let long2 =  this.long_con;
-      //let latLng = new google.maps.LatLng( resp.coords.latitude,resp.coords.longitude);
-      let latLng = new google.maps.LatLng(lat2,long2);
-      let mapOptions = {
-        center: latLng,
-        zoom: 18,
-        tilt: 30,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      
+    
 
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      
-      this.addMarker();
+   
+
+    if (typeof lat2 === 'undefined' ||typeof long2 === 'undefined'  ) {
+     //lat2=0;long2=0;
+     alert('เครื่องมีปัญหา ไม่พบพิกัด พิกัดตอนนี้ = '+lat2+" / "+long2);
+      }
+      else{
+ 
+              //alert(lat2+"  / /  "+long2);
+
+
+              //console.log('map load');
+            
+          
+          // let lat2 =  this.lat_con;
+            //let long2 =  this.long_con;
+            //let latLng = new google.maps.LatLng( resp.coords.latitude,resp.coords.longitude);
+            let latLng = new google.maps.LatLng(lat2,long2);
+            let mapOptions = {
+              center: latLng,
+              zoom: 18,
+              tilt: 30,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            
+
+            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+            
+            this.addMarker();
+          }
+    }, 800);
     
   }
 
@@ -130,7 +155,7 @@ export class CheckinPage {
       position: this.map.getCenter()
     });
    
-    let content = "<h4>you live!</h4>";         
+    let content = "<h4>ME!</h4>";         
    
     this.addInfoWindow(marker, content);
    
@@ -140,7 +165,7 @@ export class CheckinPage {
     let infoWindow = new google.maps.InfoWindow({
       content: content
     });
-   
+    infoWindow.open(this.map, marker);
     google.maps.event.addListener(marker, 'click', () => {
       infoWindow.open(this.map, marker);
     });
@@ -150,7 +175,7 @@ export class CheckinPage {
 
 
   ionViewDidLoad() {
-    this.Loading(1000);
+    //this.Loading(1000);
     this.geolocation.getCurrentPosition().then((resp) => { 
       this.lat_con= resp.coords.latitude;
       this.long_con= resp.coords.longitude;

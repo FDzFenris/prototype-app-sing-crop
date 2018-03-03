@@ -16,23 +16,33 @@
 <ion-content padding>
   <ion-item>
     <ion-label floating>ชื่อ </ion-label>
-    <ion-input type="text"  [(ngModel)]="todouser.fname_update" ></ion-input>
+    <ion-input type="text" class="input_custom1" [(ngModel)]="todouser.fname_update" ></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>นามสกุล </ion-label>
-    <ion-input type="text"  [(ngModel)]="todouser.lname_update" ></ion-input>
+    <ion-input type="text" class="input_custom1" [(ngModel)]="todouser.lname_update" ></ion-input>
   </ion-item>
   <ion-item>
    <ion-label floating>เลขบัตรประชาชน </ion-label>
-    <ion-input type="text"  [(ngModel)]="todouser.number_id" ></ion-input>
+    <ion-input type="text"  class="input_custom1" [(ngModel)]="todouser.number_id" ></ion-input>
   </ion-item>
   <ion-item>
       <ion-label floating>เบอร์โทร </ion-label>
-       <ion-input type="text"  [(ngModel)]="todouser.phone" ></ion-input>
+       <ion-input type="text" class="input_custom1"  [(ngModel)]="todouser.phone" ></ion-input>
   </ion-item>
 
-  <button ion-button  full round    color="secondary"  (click)="add_firebase()" class="button button_save">SAVE</button>
+  <br>
 
-  <button ion-button  full round     (click)="update_firebase(this.key_user)" class="button button_update"> UPDATE</button>
+
+    <button ion-button    full  outline round    color="secondary"  (click)="add_firebase()" class="button button_save" >
+      <ion-icon name="add"></ion-icon>  SAVE
+     
+    </button>
+
+      
+
+
+  <button ion-button   full  outline round   (click)="update_firebase(this.key_user)" class="button button_update"> 
+      <ion-icon name="settings"></ion-icon> UPDATE</button>
 
 </ion-content>

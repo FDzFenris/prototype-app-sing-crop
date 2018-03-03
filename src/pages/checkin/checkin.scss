@@ -1,7 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Athiti:300');
 page-checkin {
+    font-family: 'Athiti', sans-serif;
     #map {
         width: 100%;
         height: 300px;
       }
+
+      .card_custom1{    
+        color: rgb(245, 245, 245);
+        background-color: rgb(54, 54, 54);
+        height: 70px;
+        width: 100%;
+        margin-left: -5px;
+    }
 
 }

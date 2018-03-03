@@ -14,22 +14,26 @@
 
 
 <ion-content padding>
-ข้อมูลส่วนตัว
+  
+  <h2>ข้อมูลส่วนตัว</h2>
+
 
 <ion-grid>
+    <ion-card class="card_custom1">   
     <ion-row>
       <ion-col col-12>
           <ion-list>
-              ชื่อ-นามสกุล : {{ this.fname }} - {{ this.lname }}  
+             <b> ชื่อ-นามสกุล </b> : {{ this.fname }} - {{ this.lname }}  
           </ion-list>
         </ion-col>
         <ion-col col-12>
             <ion-list>
-               เลขบัตรประชาชน : {{ this.number_id }}
+                <b> เลขบัตรประชาชน </b>: {{ this.number_id }}
             </ion-list>
           </ion-col>
 
     </ion-row>
+  </ion-card>
 </ion-grid>
 
 

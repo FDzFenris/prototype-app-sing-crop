@@ -32,24 +32,26 @@
     
      
       
-              <ion-item *ngFor="let item_user of user_all; let i = index;" >
+              <ion-item class="color_custom1"  *ngFor="let item_user of user_all; let i = index;" >
     
               
     
               
-                <ion-grid>
+                <ion-grid class="grid_custom1">
+                    <ion-card class="card_custom1">    
                     <ion-row>
-                      <ion-col col-12>{{item_user.fname}} - {{item_user.lname}}  </ion-col>
+                      <ion-col col-8 class="col_setiing1"> {{item_user.fname}} - {{item_user.lname}}  </ion-col>
                     
-                              <ion-col col-12>                          
-                                <button ion-button small (click)="edit_user(item_user.key)" class="button">Update{{i+1}}</button> 
-                                <button ion-button  small  color="danger" (click)="delete_firebase(item_user.key)" class="button">Delete{{i+1}}</button> 
+                              <ion-col col-4  class="pull-right">                          
+                                <button ion-button small (click)="edit_user(item_user.key)" class="button">  <ion-icon name="settings"></ion-icon></button> 
+                                <button ion-button  small  color="danger" (click)="delete_firebase(item_user.key)" class="button"><ion-icon name="trash"></ion-icon></button> 
                               </ion-col>
             
                            
                          
                         
                     </ion-row>
+                    </ion-card>
                     
                 </ion-grid>
     
