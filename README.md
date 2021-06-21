@@ -1,6 +1,6 @@
 # FDzFenris 
 # IONIC3
-# AngularFireDatabase2 v5.0
+# AngularFire2 v5.0
 # GEOLOCATION
 # GOOGLE MAP
 # GOOGLE MAP API
